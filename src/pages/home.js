@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Post from '../components/Post';
@@ -17,13 +16,13 @@ class home extends Component {
             posts.map(post => <Post key={post.postId} post={post}/>)
         ) : <p>Loading...</p>
         return (
-            <Grid container spacing={10}>
+            <Grid container spacing={8}>
                 <Grid item sm={8} xs={12}>
                     {recentPostsMarkup}
                 </Grid>
-                <Profile/>
+                
                 <Grid item sm={4} xs={12}>
-                    <p>Profile...</p>
+                    <Profile/>
                 </Grid>
             </Grid>
         );

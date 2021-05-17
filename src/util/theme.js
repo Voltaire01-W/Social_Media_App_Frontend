@@ -51,7 +51,7 @@ export const themeObject = {
         marginBottom: 20
       },
       paper: {
-        padding: 20
+        padding: 20,
       },
       profile: {
         '& .image-wrapper': {
