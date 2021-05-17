@@ -3,11 +3,20 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import PropTypes from 'prop-types';
+import CustomButton from '../util/CustomButton';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import { Typography } from '@material-ui/core';
+import ChatIcon from '@material-ui/icons/Chat';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+
+import { connect } from 'react-redux';
+import { likePost, unlikePost } from '../redux/actions/dataActions';
+
 
 const styles = {
     card: {
@@ -25,9 +34,54 @@ const styles = {
 }
 
 class Post extends Component {
+    likedPost = () => {
+        if(this.props.user.likes && this.props.user.likes.find(
+            like => like.postId === this.props.post.postId)) {
+                return true;
+            } else {
+                return false;
+            }
+    };
+    likePost = () => {
+        this.props.likePost(this.props.post.postId);
+    }
+    unlikePost = () => {
+        this.props.unlikePost(this.props.post.postId);
+    }
     render() {
         dayjs.extend(relativeTime)
-            const { classes, post : { body, createdAt, userImage, userHandle, postId, likeCount, commentCount } } = this.props
+            const { 
+                classes, 
+                post : { 
+                    body, 
+                    createdAt, 
+                    userImage, 
+                    userHandle, 
+                    postId, 
+                    likeCount, 
+                    commentCount 
+                },
+                user: {
+                    authenticated
+                } 
+            } = this.props
+        const likeButton = !authenticated ? (
+            <CustomButton tip="Like">
+                <Link to='/login'>
+                    <FavoriteBorder color="primary" />
+                </Link>
+            </CustomButton>
+        ) : (
+            this.likedPost() ? (
+                <CustomButton tip="Undo like" onClick={this.unlikePost}>
+                    <FavoriteIcon color="primary" />
+                </CustomButton>
+            ) : (
+                <CustomButton tip="Like" onClick={this.likePost}>
+                    <FavoriteBorder color="primary" />
+                </CustomButton>
+            )
+        )
         return (
             <Card 
                 className={classes.card}>
@@ -54,10 +108,33 @@ class Post extends Component {
                         variant="body1">
                             {body}
                     </Typography>
+                    {likeButton}
+                    <span>{likeCount} Likes</span>
+                    <CustomButton tip="comments">
+                        <ChatIcon color="primary" />
+                    </CustomButton>
+                    <span>{commentCount} comments</span>
                 </CardContent>
             </Card>
         );
     }
+};
+
+Post.propTypes = {
+    likePost: PropTypes.func.isRequired,
+    unlikePost: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    post: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(Post);
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+const mapActionsToProps = {
+    likePost,
+    unlikePost
+}
+
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(Post));
