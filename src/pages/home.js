@@ -25,7 +25,7 @@ class home extends Component {
             posts.map(post => <Post key={post.postId} post={post}/>)
         ) : <PostSkeleton />
         return (
-            <Grid container spacing={8}>
+            <Grid container spacing={6}>
                 <Grid item sm={8} xs={12}>
                     {recentPostsMarkup}
                 </Grid>
