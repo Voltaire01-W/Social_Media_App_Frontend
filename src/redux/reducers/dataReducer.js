@@ -5,7 +5,8 @@ import {
     LOADING_DATA, 
     DELETE_POST,
     CREATE_POST,
-    SET_POST
+    SET_POST,
+    SUBMIT_COMMENT
  } from '../types';
 
 const initialState = {
@@ -56,6 +57,14 @@ export default function dataReducer(state = initialState, action) {
                     ...state.posts
                 ]
             };
+        case SUBMIT_COMMENT:
+            return {
+                ...state,
+                post: {
+                    ...state.post,
+                    comment: [action.payload, ...state.post.comments]
+                }
+            }
         default:
             return state;
     }

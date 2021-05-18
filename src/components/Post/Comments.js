@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types';
-import CustomButton from '../../util/CustomButton';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
@@ -23,7 +22,7 @@ const styles = theme => ({
 
 class Comments extends Component{
     render() {
-        const { comments, classes } = this.props;
+        const { comments = [], classes } = this.props;
         return (
             <Grid container>
                 {comments.map((comment, index) => {
