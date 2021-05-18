@@ -20,15 +20,18 @@ import CloseIcon from '@material-ui/icons/Close';
 const styles = theme => ({
     ...theme.spreadThis,
     submitButton: {
-        position: 'relative'
+        position: 'relative',
+        float: 'right',
+        marginBottom: 20
     },
     progressSpinner: {
         position: 'absolute'
     },
     closeButton: {
+        marginLeft: 'auto',
         postion: 'absolute',
-        left: '90%',
-        top: '10%'
+        top: '56px',
+        right: '15px'
     }
 })
 
@@ -42,17 +45,16 @@ class CreatePost extends Component {
         this.props.clearErrors();
         this.setState({ open: false, errors: {} });
     };
-    static getDerivedStateFromProps(nextProps){
+    componentWillReceiveProps(nextProps) {
         if (nextProps.UI.errors) {
-            return { 
-                errors: nextProps.UI.errors 
-            };
+          this.setState({
+            errors: nextProps.UI.errors
+          });
         }
-        // if (!nextProps.UI.errors && !nextProps.UI.loading) {
-        //     { body: '', open: false, errors: {} };
-        //     this.handleClose();
-        // }
-    };
+        if (!nextProps.UI.errors && !nextProps.UI.loading) {
+          this.setState({ body: '', open: false, errors: {} });
+        }
+      }
     handleOpen = () => {
         this.setState({ open: true })
     };
