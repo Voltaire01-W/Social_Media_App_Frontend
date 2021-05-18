@@ -76,7 +76,7 @@ export const themeObject = {
             verticalAlign: 'middle'
           },
           '& a': {
-            color: '#00bcd4'
+            color: '#8a1c1c'
           }
         },
         '& hr': {

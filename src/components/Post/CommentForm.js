@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import CustomButton from '../../util/CustomButton';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+// Material UI
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
+// Redux
 import { connect } from 'react-redux';
 import { submitComment } from '../../redux/actions/dataActions';
 

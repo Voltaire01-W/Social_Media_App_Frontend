@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
+// Material UI
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import jwtDecode from 'jwt-decode';
@@ -11,6 +12,7 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import { SET_AUTHENTICATED } from './redux/types';
 import { logoutUser, getUserData } from './redux/actions/userActions';
+import axios from 'axios';
 
 // Components
 import Navbar from './components/Layout/Navbar';
@@ -21,9 +23,11 @@ import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
 import user from './pages/user'
-import axios from 'axios';
 
 const theme = createMuiTheme(themeObject);
+
+axios.defaults.baseURL = 
+  'https://us-central1-socialape-14249.cloudfunctions.net/api'
 
 const token = localStorage.FBIdToken;
 if(token) {

@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
+// Material UI
 import Grid from '@material-ui/core/Grid';
+
+// Components
 import Post from '../components/Post/Post';
 import Profile from '../components/Profile/Profile'
+
+// Utilities
+import PostSkeleton from '../util/PostSkeleton';
+
+// Redux
 import {connect} from 'react-redux';
 import { getPosts } from '../redux/actions/dataActions';
 
@@ -14,7 +23,7 @@ class home extends Component {
         const { posts, loading } = this.props.data;
         let recentPostsMarkup = !loading ? (
             posts.map(post => <Post key={post.postId} post={post}/>)
-        ) : <p>Loading...</p>
+        ) : <PostSkeleton />
         return (
             <Grid container spacing={8}>
                 <Grid item sm={8} xs={12}>

@@ -1,27 +1,31 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types';
-import CustomButton from '../../util/CustomButton';
+import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import dayjs from 'dayjs';
+
+// Components
 import LikeButton from './LikeButton';
-import { Link } from 'react-router-dom';
 import Comments from './Comments';
 import CommentForm from './CommentForm'
-// Material UI imports
+
+// Utilities
+import CustomButton from '../../util/CustomButton';
+
+// Material UI
 import { 
-    Button, 
     Dialog, 
     DialogContent, 
-    DialogTitle, 
-    TextField,
     CircularProgress,
     Grid,
     Typography 
 } from '@material-ui/core';
-//Icons
+
+// Icons
 import CloseIcon from '@material-ui/icons/Close';
 import ChatIcon from '@material-ui/icons/Chat';
 import { UnfoldMore } from '@material-ui/icons';
+
 // Redux
 import { connect } from 'react-redux';
 import { getPost, clearErrors } from '../../redux/actions/dataActions';
