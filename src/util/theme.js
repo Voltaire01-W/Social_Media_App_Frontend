@@ -94,6 +94,6 @@ export const themeObject = {
         '& a': {
           margin: '20px 10px'
         }
-      }
+      },
     },
   };

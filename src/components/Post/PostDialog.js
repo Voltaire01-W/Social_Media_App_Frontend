@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types';
-import CustomButton from '../util/CustomButton';
+import CustomButton from '../../util/CustomButton';
 import withStyles from '@material-ui/core/styles/withStyles';
 import dayjs from 'dayjs';
 import LikeButton from './LikeButton';
 import { Link } from 'react-router-dom';
+import Comments from './Comments';
 // Material UI imports
 import { 
     Button, 
@@ -22,15 +23,11 @@ import ChatIcon from '@material-ui/icons/Chat';
 import { UnfoldMore } from '@material-ui/icons';
 // Redux
 import { connect } from 'react-redux';
-import { getPost } from '../redux/actions/dataActions';
+import { getPost } from '../../redux/actions/dataActions';
 
 
 const styles = theme => ({
     ...theme.spreadThis,
-    invisibleSeparator: {
-        border: 'none',
-        margin: 4
-    },
     profileImage: {
         maxWidth: 200,
         height: 200,
@@ -76,7 +73,9 @@ class PostDialog extends Component {
                 likeCount, 
                 commentCount, 
                 userImage, 
-                userHandle}, 
+                userHandle,
+                comments
+             }, 
                 UI: { 
                     loading }
                 } = this.props;
@@ -113,6 +112,8 @@ class PostDialog extends Component {
                     </CustomButton>
                     <span>{commentCount} comments</span>
                 </Grid>
+                <hr className={classes.visibleSeparator}/>
+                <Comments comments={comments}/>
             </Grid>
         )
         return (
