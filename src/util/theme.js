@@ -21,10 +21,10 @@ export const themeObject = {
           textAlign: 'center',
       },
       image: {
-          margin: '0px auto 20px auto'
+          margin: 'auto'
       },
       pageTitle: {
-          margin: '0px auto 10px auto'
+          margin: 'auto'
       },
       textField: {
           margin: '5px auto 5px auto'

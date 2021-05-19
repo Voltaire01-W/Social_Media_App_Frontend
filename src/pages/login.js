@@ -14,6 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // Redux
 import { connect } from 'react-redux';
 import { loginUser } from '../redux/actions/userActions';
+import { clearErrors } from '../redux/actions/dataActions';
 
 
 const styles = (theme) => ({
@@ -29,9 +30,11 @@ class login extends Component {
             errors: {}
         }
     }
-    static getDerivedStateFromProps(nextProps){
-        if (nextProps.UI.errors) {
+    static getDerivedStateFromProps(nextProps, state){
+        if (nextProps.UI.errors !== state.errors) {
             return { errors: nextProps.UI.errors };
+        } else {
+            return null;
         }
     };
     handleSubmit = (event) => {
@@ -43,6 +46,7 @@ class login extends Component {
         this.props.loginUser(userData, this.props.history);
     }
     handleChange = (event) => {
+        this.props.clearErrors();
         this.setState({
             [event.target.name]: event.target.value
         });
@@ -65,8 +69,8 @@ class login extends Component {
                             type="email" 
                             label="Email" 
                             className={classes.textField}
-                            helperText={errors.email}
-                            error={errors.email ? true : false} 
+                            helperText={errors === null ? null : errors.email}
+                            error={errors === null ? null : errors.email ? true : false}
                             value={this.state.email} 
                             onChange={this.handleChange} 
                             fullWidth
@@ -77,13 +81,13 @@ class login extends Component {
                             type="password" 
                             label="Password" 
                             className={classes.textField} 
-                            helperText={errors.password}
-                            error={errors.password ? true : false}
+                            helperText={errors === null ? null : errors.password}
+                            error={errors === null ? null : errors.password ? true : false}
                             value={this.state.password} 
                             onChange={this.handleChange} 
                             fullWidth
                         />
-                        {errors.general && (
+                        {errors === null ? null : errors.general && (
                             <Typography variant="body2" className={classes.customError}>
                                 {errors.general}
                             </Typography>
@@ -101,7 +105,7 @@ class login extends Component {
                             )}
                         </Button>
                         <br />
-                        <small>Dont have an account? Sign up <Link to="/signup">here</Link></small>
+                        <small>Dont have an account? Sign up <Link onClick={this.handleChange} to="/signup">here</Link></small>
                     </form>
                 </Grid>
                 <Grid item sm/>
@@ -112,6 +116,7 @@ class login extends Component {
 
 login.propTypes = {
     classes: PropTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired,
     loginUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     UI: PropTypes.object.isRequired
@@ -123,7 +128,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-    loginUser
+    loginUser,
+    clearErrors
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(login))

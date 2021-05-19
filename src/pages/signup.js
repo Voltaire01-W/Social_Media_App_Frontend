@@ -14,14 +14,15 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // Redux
 import { connect } from 'react-redux';
 import { signupUser } from '../redux/actions/userActions';
+import { clearErrors } from '../redux/actions/dataActions';
 
 const styles = (theme) => ({
     ...theme.spreadThis
   })
 
 class signup extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: '',
             password: '',
@@ -30,9 +31,11 @@ class signup extends Component {
             errors: {}
         };
     }
-    static getDerivedStateFromProps(nextProps){
-        if (nextProps.UI.errors) {
+    static getDerivedStateFromProps(nextProps, state){
+        if (nextProps.UI.errors !== state.errors) {
             return { errors: nextProps.UI.errors };
+        } else {
+            return null;
         }
     };
     handleSubmit = (event) => {
@@ -49,6 +52,7 @@ class signup extends Component {
         this.props.signupUser(newUserData, this.props.history);
     }
     handleChange = (event) => {
+        this.props.clearErrors();
         this.setState({
             [event.target.name]: event.target.value
         });
@@ -71,8 +75,8 @@ class signup extends Component {
                             type="email" 
                             label="Email" 
                             className={classes.textField}
-                            helperText={errors.email}
-                            error={errors.email ? true : false} 
+                            helperText={errors === null ? null : errors.email}
+                            error={errors === null ? null : errors.email ? true : false} 
                             value={this.state.email} 
                             onChange={this.handleChange} 
                             fullWidth
@@ -83,8 +87,8 @@ class signup extends Component {
                             type="password" 
                             label="Password" 
                             className={classes.textField} 
-                            helperText={errors.password}
-                            error={errors.password ? true : false}
+                            helperText={errors === null ? null : errors.password}
+                            error={errors === null ? null : errors.password ? true : false}
                             value={this.state.password} 
                             onChange={this.handleChange} 
                             fullWidth
@@ -95,8 +99,8 @@ class signup extends Component {
                             type="password" 
                             label="Confirm Password" 
                             className={classes.textField} 
-                            helperText={errors.confirmPassword}
-                            error={errors.confirmPassword ? true : false}
+                            helperText={errors === null ? null : errors.confirmPassword}
+                            error={errors === null ? null : errors.confirmPassword ? true : false}
                             value={this.state.confirmPassword} 
                             onChange={this.handleChange} 
                             fullWidth
@@ -107,13 +111,13 @@ class signup extends Component {
                             type="text" 
                             label="Handle" 
                             className={classes.textField} 
-                            helperText={errors.handle}
-                            error={errors.handle ? true : false}
+                            helperText={errors === null ? null : errors.handle}
+                            error={errors === null ? null : errors.handle ? true : false}
                             value={this.state.handle} 
                             onChange={this.handleChange} 
                             fullWidth
                         />
-                        {errors.general && (
+                        {errors === null ? null : errors.general && (
                             <Typography variant="body2" className={classes.customError}>
                                 {errors.general}
                             </Typography>
@@ -131,7 +135,7 @@ class signup extends Component {
                             )}
                         </Button>
                         <br />
-                        <small>Already have an account? Login <Link to="/login">here</Link></small>
+                        <small>Already have an account? Login <Link onClick={this.handleChange} to="/login">here</Link></small>
                     </form>
                 </Grid>
                 <Grid item sm/>
@@ -143,6 +147,7 @@ class signup extends Component {
 signup.propTypes = {
     classes: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
+    clearErrors: PropTypes.func.isRequired,
     UI: PropTypes.object.isRequired,
     signupUser: PropTypes.func.isRequired
 };
@@ -152,4 +157,4 @@ const mapStateToProps = (state) => ({
     UI: state.UI
 });
 
-export default connect(mapStateToProps, { signupUser })(withStyles(styles)(signup));
+export default connect(mapStateToProps, { signupUser, clearErrors })(withStyles(styles)(signup));

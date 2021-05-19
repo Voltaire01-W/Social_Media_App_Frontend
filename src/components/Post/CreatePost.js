@@ -40,25 +40,32 @@ const styles = theme => ({
 })
 
 class CreatePost extends Component {
-    state = {
-        open: false,
-        body: '',
-        errors: {}
+    constructor(props) {
+        super(props)
+        this.state = {
+            open: false,
+            body: '',
+            errors: {}
+        };
     };
+    
     handleClose = () => {
         this.props.clearErrors();
         this.setState({ open: false, errors: {} });
     };
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.UI.errors) {
-          this.setState({
-            errors: nextProps.UI.errors
-          });
+
+    static getDerivedStateFromProps(nextProps, state){
+        if (nextProps.UI.errors !== state.errors) {
+            return { errors: nextProps.UI.errors };
+        } 
+        if(!nextProps.UI.errors && !nextProps.UI.loading 
+            !== state.errors && state.loading) {
+            return { body: '', open: false, errors: {} }
+        } else {
+            return null;
         }
-        if (!nextProps.UI.errors && !nextProps.UI.loading) {
-          this.setState({ body: '', open: false, errors: {} });
-        }
-      }
+    };
+
     handleOpen = () => {
         this.setState({ open: true })
     };
@@ -101,8 +108,8 @@ class CreatePost extends Component {
                                     multiline
                                     rows="3"
                                     placeholder="What's on your mind?"
-                                    error={errors.body ? true : false}
-                                    helperText={errors.body}
+                                    error={errors === null ? null : errors.body ? true : false}
+                                    helperText={errors === null ? null : errors.body}
                                     className={classes.textField}
                                     onChange={this.handleChange}
                                     fullWidth
