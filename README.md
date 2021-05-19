@@ -1,7 +1,7 @@
 # Welcome to Firebird Social!
 
 ## Come join the hottest new social media site
-[Firebird Social](firebird.social)
+[Firebird Social](https://www.firebird.social)
 
 What's on your mind? Go ahead and share it in a post, or customize your profile with a Bio and Picture!
 We look forward to seeing you on there!
