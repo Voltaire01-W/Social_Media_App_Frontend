@@ -1,7 +1,7 @@
 # Welcome to Firebird Social!
 
 ## Come join the hottest new social media site
-[Firebird Social](https://www.firebird.social)
+[Firebird Social](https://firebird.social)
 
 What's on your mind? Go ahead and share it in a post, or customize your profile with a Bio and Picture!
 We look forward to seeing you on there!
@@ -25,6 +25,7 @@ This project is a new social media application with post, comment, and like or u
 - Liking friends posts.
 
 ### Things in this project currently in progress:
+- Chat Rooms
 - Notifications fix (Notifications don't yet reset to "read")
 - Like button within Expanded Post fix (currently affects the display of comments within the expanded post)
 - Follow user functionality
